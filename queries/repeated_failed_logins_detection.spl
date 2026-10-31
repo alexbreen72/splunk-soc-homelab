@@ -1,0 +1,8 @@
+index=* EventCode=4625
+| eval _time=_indextime
+| rex field=Message "Account For Which Logon Failed:[\s\S]*?Account Name:\s+(?<failed_username>[^\r\n]+)"
+| rex field=Message "Source Network Address:\s+(?<source_ip>[^\r\n]+)"
+| bin _time span=10m
+| stats count by _time failed_username source_ip
+| where count >= 5
+| sort -count

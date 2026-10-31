@@ -1,0 +1,5 @@
+index=* EventCode=4625
+| rex field=Message "Account For Which Logon Failed:[\s\S]*?Account Name:\s+(?<failed_username>[^\r\n]+)"
+| rex field=Message "Source Network Address:\s+(?<source_ip>[^\r\n]+)"
+| stats count by failed_username source_ip
+| sort -count

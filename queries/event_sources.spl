@@ -1,0 +1,3 @@
+index=*
+| stats count by host, sourcetype
+| sort -count
